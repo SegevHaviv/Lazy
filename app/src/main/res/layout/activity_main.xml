@@ -8,8 +8,7 @@
     tools:context="com.example.android.testforlazy.MainActivity">
 
 
-    <!-- Main Headline on Login layout-->
-
+    <!-- Main Headline on Login-->
     <TextView
         android:id="@+id/login_headline_tv"
         android:layout_width="wrap_content"
@@ -21,15 +20,18 @@
         android:textColor="@android:color/white"
         android:textSize="42sp" />
 
+
+    <!-- Login Email EditText-->
     <LinearLayout
         android:id="@+id/login_email_la"
+        android:orientation="horizontal"
         android:weightSum="1"
         android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:orientation="horizontal">
+        >
 
         <EditText
             android:id="@+id/login_email_ed"
@@ -55,6 +57,7 @@
 
     </LinearLayout>
 
+    <!-- Login Password EditText-->
     <LinearLayout
         android:id="@+id/login_password_la"
         android:layout_width="match_parent"
