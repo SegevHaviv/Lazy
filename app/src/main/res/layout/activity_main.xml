@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/mon4"
+    android:background="@drawable/monkey_background"
     tools:context="com.example.android.testforlazy.MainActivity">
 
 
@@ -45,11 +44,11 @@
             android:textColor="@android:color/white"
 
             android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/login"
+            android:drawableStart="@drawable/login"
 
             android:hint="@string/emailHint"
             android:textColorHint="@color/colorGreyHint"
-            android:backgroundTint="@color/colorGreyHint"
+
 
             android:maxLength="16"
             />
@@ -74,7 +73,7 @@
             android:layout_gravity="center"
             android:layout_weight="0.7"
 
-            android:backgroundTint="@color/colorGreyHint"
+
             android:hint="@string/passwordHint"
             android:textColorHint="@color/colorGreyHint"
 
@@ -82,7 +81,7 @@
             android:textSize="24sp"
             android:textColor="@android:color/white"
 
-            android:drawableLeft="@drawable/key"
+            android:drawableStart="@drawable/key"
             android:drawablePadding="10dp"
 
             android:maxLength="16"/>
@@ -101,12 +100,11 @@
 
         <Button
             android:id="@+id/login_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.2"
             android:background="@null"
             android:text="@string/Login"
-            android:layout_centerInParent="true"
             android:textColor="@android:color/white"
             android:textSize="24sp" />
     </LinearLayout>
@@ -122,7 +120,7 @@
 
         <TextView
             android:id="@+id/forgot_password_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
@@ -143,7 +141,7 @@
 
         <TextView
             android:id="@+id/register_hypertext_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
