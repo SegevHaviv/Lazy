@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/mon4"
+    tools:context="com.example.android.testforlazy.MainActivity">
+
+
+    <!-- Main Headline on Login layout-->
+
+    <TextView
+        android:id="@+id/login_headline_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center"
+        android:layout_marginTop="90dp"
+        android:drawableTop="@drawable/lazy"
+        android:text="@string/headline"
+        android:textColor="@android:color/white"
+        android:textSize="42sp" />
+
+    <LinearLayout
+        android:id="@+id/login_email_la"
+        android:weightSum="1"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/login_email_ed"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:layout_gravity="center"
+
+            android:inputType="textEmailAddress"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/login"
+
+            android:hint="@string/emailHint"
+            android:textColorHint="@color/colorGreyHint"
+            android:backgroundTint="@color/colorGreyHint"
+
+            android:maxLength="16"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/login_password_la"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/login_password_ed"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+
+            android:backgroundTint="@color/colorGreyHint"
+            android:hint="@string/passwordHint"
+            android:textColorHint="@color/colorGreyHint"
+
+            android:inputType="textPassword"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+
+            android:drawableLeft="@drawable/key"
+            android:drawablePadding="10dp"
+
+            android:maxLength="16"/>
+
+    </LinearLayout>
+
+
+    <!-- Login hyper text! -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingTop="2dp"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:background="@null"
+            android:text="@string/Login"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+
+    <!-- Forgot Password hyper text! -->
+    <LinearLayout
+        android:id="@+id/forgot_password_la"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/forgot_password_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/forgotPassword"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+    <!-- Register hyper text! -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/register_hypertext_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="95dp"
+            android:text="@string/registerHyperText"
+            android:textColor="@android:color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

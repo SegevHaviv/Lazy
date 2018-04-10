@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">testForLazy</string>
+    <string name="headline"><b>Lazy</b>Application</string>
+    <string name="emailHint">Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="forgotPassword">Cannot access your account? > ></string>
+    <string name="registerHyperText">New here? Create an account ></string>
+    <string name="Login">Login</string>
+    <string name="EmptyLoginParameters">Name or password can not be empty</string>
+</resources>
