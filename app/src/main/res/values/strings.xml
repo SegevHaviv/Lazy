@@ -7,4 +7,6 @@
     <string name="registerHyperText">New here? Create an account ></string>
     <string name="Login">Login</string>
     <string name="EmptyLoginParameters">Name or password can not be empty</string>
+    <string name="title_activity_app">AppActivity</string>
+    <string name="Register">Register</string>
 </resources>

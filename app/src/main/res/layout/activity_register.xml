@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/monkey_background"
+    tools:context="com.example.android.testforlazy.MainActivity">
+
+
+    <!-- Main Headline on Login-->
+    <TextView
+        android:id="@+id/register_headline_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center"
+        android:layout_marginTop="90dp"
+        android:drawableTop="@drawable/lazy"
+        android:text="@string/headline"
+        android:textColor="@android:color/white"
+        android:textSize="42sp" />
+
+
+    <!-- Login Email EditText-->
+    <LinearLayout
+        android:id="@+id/register_email_la"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/register_email_ed"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/login"
+            android:hint="@string/emailHint"
+
+            android:inputType="textEmailAddress"
+            android:maxLength="16"
+
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/colorGreyHint"
+
+
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <!-- Login Password EditText-->
+    <LinearLayout
+        android:id="@+id/register_password_la"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/register_password_ed"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.7"
+
+
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/key"
+
+            android:hint="@string/passwordHint"
+            android:inputType="textPassword"
+            android:maxLength="16"
+
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/colorGreyHint"
+
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+
+    <!-- Login hyper text! -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        android:paddingTop="2dp"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/register_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:background="@null"
+            android:text="@string/Register"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+
+    <!-- Forgot Password hyper text! -->
+
+
+    <!-- Register hyper text! -->
+
+
+</LinearLayout>
