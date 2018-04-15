@@ -1,61 +1,70 @@
 package com.example.android.testforlazy;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.util.Log;
-
+import android.content.Intent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class TCPSocket extends AsyncTask<String,Void,Boolean>{
+public class TCPSocket{
 
     private static final String TAG = TCPSocket.class.getSimpleName();
+
+    // TODO Handle the case the server crashes.
 
     /** Server Communication Variables */
     private Socket socket;
     private BufferedReader input;
     private PrintWriter output;
 
-    public boolean init(String ip,String port){
-        return doInBackground(ip,port);
+    /** Server Information */
+    private static final String PORT = "5000";
+    private static final String IP =  "34.242.225.193";
+
+    private static final TCPSocket SingletonTCPSocket = new TCPSocket();
+
+    public static TCPSocket getInstance() {
+        return TCPSocket.SingletonTCPSocket;
     }
 
-    @Override
-    protected Boolean doInBackground(String... strings) {
-        final String currIP = strings[0];
-        final String currPassword = strings[1];
+    private TCPSocket(){
 
-        Thread t = new Thread(new Runnable(){ // TODO In case the server does not run.
+        Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
-                try {
-                    if (socket == null) {
-                        socket = new Socket(currIP, Integer.parseInt(currPassword));
-                        input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        output = new PrintWriter(socket.getOutputStream());
-                    }
+                try{
+                    socket = new Socket(IP,Integer.parseInt(PORT));
+                    output = new PrintWriter(socket.getOutputStream());
+                    input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
                 }catch (IOException e){
-                    Log.d(TAG,"Connecting the socket and it's components failed.");
-                    e.printStackTrace();
+                    String message = e.getMessage();
+                    Log.d(TAG,message);
+                    Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                    homeIntent.addCategory( Intent.CATEGORY_HOME );
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
+                    //TODO if didn't manage to connect the server, close the application with a pop up
                 }
             }
         });
-        t.start();
 
-        try{
-            Thread.sleep(1000);
-        }catch(InterruptedException e){
-            e.printStackTrace();
-        }
-
-
-        return socket.isConnected();
+        thread.start();
     }
+
+    public void close(){
+        try{
+            socket.close();
+            output.close();
+            input.close();
+        }catch (IOException e){
+            Log.d(TAG,"Failed to close the resources, reason : " + e.getCause());
+        }
+    }
+
 
     public boolean sendMessage(String message){
         if(output != null){
@@ -72,12 +81,9 @@ public class TCPSocket extends AsyncTask<String,Void,Boolean>{
         try{
             message = input.readLine();
         }catch (IOException e){
-            Log.d(TAG,"Failed to receive message");
-            e.printStackTrace();
+            Log.d(TAG,"Failed to receive message, reason : " + e.getCause());
         }
-
         return message;
     }
-
 
 }

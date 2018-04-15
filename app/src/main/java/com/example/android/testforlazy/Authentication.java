@@ -13,40 +13,43 @@ import java.util.regex.Pattern;
 public class Authentication {
 
     private final static String TAG = Authentication.class.getSimpleName();
-    private TCPSocket tcpSocket;
     private String reply;
+    private TCPSocket tcpSocket;
 
-    public Authentication(@NonNull TCPSocket tcpSocket){
-        this.tcpSocket = tcpSocket;
+    public Authentication(){
+        tcpSocket = TCPSocket.getInstance();
     }
 
+    /**
+     * Sending the user's information to the server and waits for a reply if the given information is correct.
+     * @param email user's email
+     * @param password user's password
+     * @return true if the details are correct, false otherwise
+     * @throws IOException if given details doesn't meet the ground requirements.
+     */
     public boolean login(String email,String password) throws  IOException{
+        final String details = email + " " + password + " app";
 
-        final String userLoginInformation = email + " " + password + " app";
-        new Thread(new Runnable(){
+        Log.i(TAG,"Trying to log in with : " + details);
+
+        Thread t = new Thread(new Runnable(){
             @Override
             public void run() {
-                if(tcpSocket != null){
-                    //Logging in to the server
-                    tcpSocket.sendMessage(userLoginInformation);
-                    reply = tcpSocket.receiveMessage();
-                }else{
-                    Log.i(TAG,"Attempting to log in even though logged in already");
-                }
+                tcpSocket.sendMessage(details);
+                reply = tcpSocket.receiveMessage();
+                Log.d(TAG,reply);
             }
-        }).start();
+        });
+
+        t.start();
 
         try{
-            Thread.sleep(1000);
-        }catch(Exception e){
+            t.join();
+        }catch (InterruptedException e){
             e.printStackTrace();
         }
 
-        boolean result = TextUtils.equals(reply,"recive login");
-        if(!result)
-            throw new IOException("Login failed");
-
-        return result;
+        return reply.equals("recive login");
     }
 
     /** Checking if the password matches the requirements

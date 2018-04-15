@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    /** Singleton instance of the socket */
+    private TCPSocket tcpSocket;
+
+
     /** Server Information */
     private static final String PORT = "5000";
     private static final String IP =  "34.242.225.193";
@@ -33,8 +37,7 @@ public class MainActivity extends AppCompatActivity{
 
     private User user;
 
-    /** Server Communication Variables */
-    private TCPSocket tcpSocket;
+
 
     /** Authentication Variables **/
     private Authentication authentication;
@@ -45,35 +48,19 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         //Check if there's an internet connection
-        try{
-            boolean result = haveNetworkConnection();
-            if(!result)
-                throw new NullPointerException("No internet");
-        }catch (NullPointerException e){
-            Log.d(TAG, e.getCause().toString());
+        boolean result = haveNetworkConnection();
+        if(!result) {
+            Log.d(TAG, "No Internet Connection");
             noInternetAction();
-        }
-
+            //TODO Check why initialize still happens if noInternetAction performed.
+    }
 
         initialize();
     }
 
-    public void noInternetAction() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Closing Activity")
-                .setMessage("No internet, please check the internet connection")
-                .setPositiveButton("CLOSE", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-
-                })
-                .show();
-    }
-
+    /**
+     * Initializes the variables from the layout and setting button listeners.
+     */
     private void initialize(){
         email_ed = findViewById(R.id.login_email_ed); // Email input
         password_ed = findViewById(R.id.login_password_ed); // Password input
@@ -81,23 +68,9 @@ public class MainActivity extends AppCompatActivity{
         register_hypertext_tv = findViewById(R.id.register_hypertext_tv);
 
 
-        tcpSocket = new TCPSocket();
-        boolean result = tcpSocket.doInBackground(IP,PORT);
-        if(!result) { // connection to socket failed
+        tcpSocket = TCPSocket.getInstance();
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Check Your Internet Connection!! you are not connected to the Internet..");
-
-            AlertDialog alert = builder.create();
-            alert.show();
-
-            try{
-                Thread.sleep(1000);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-        }
-        authentication = new Authentication(tcpSocket);
+        authentication = new Authentication();
 
         // Adding listener to the login button.
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -112,9 +85,11 @@ public class MainActivity extends AppCompatActivity{
                         user.setEmail(inputEmail);
                         user.setPassword(inputPassword);
                     }
+
                     //Returns true if the login succeed, false otherwise.
                     Boolean result = authentication.login(user.getEmail(),user.getPassword());
                     Log.i(TAG,result.toString());
+
                     if(result){
                         moveToActivity(AppActivity.class);
                     }
@@ -128,6 +103,7 @@ public class MainActivity extends AppCompatActivity{
         });
 
 
+        // Adding listener to move to register activity.
         register_hypertext_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,16 +112,29 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    /**
+     * Creating a small pop up in the bottom of the activity.
+     * @param message Message to present in the pop up.
+     */
     public void createToast(String message){
         Toast.makeText(this,message ,Toast.LENGTH_LONG).show();
     }
 
+    /**
+     *  Moving to the given class'es activity
+     * @param destination Activity to move to.
+     */
     private void moveToActivity(Class destination){
         Intent intent = new Intent(this,destination);
         startActivity(intent);
     }
 
 
+    /**
+     * Checking whether there's an active internet connection
+     * @return true if it has, false if not
+     * @throws NullPointerException in case got null data
+     */
     private boolean haveNetworkConnection() throws  NullPointerException{
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -165,5 +154,32 @@ public class MainActivity extends AppCompatActivity{
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    /**
+     * Open's an alert dialog and closing the application. To be called when there's no internet.
+     */
+    public void noInternetAction() {
+        new AlertDialog.Builder(this)
+                .setCancelable(false) // Not allowing the user to avoid the dialog
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("No Internet")
+                .setMessage("No internet, please check the internet connection")
+                .setPositiveButton("CLOSE", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .show();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        TCPSocket.close();
     }
 }
