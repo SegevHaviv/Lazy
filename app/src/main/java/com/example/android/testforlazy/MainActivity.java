@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity{
         if(!result) {
             Log.d(TAG, "No Internet Connection");
             noInternetAction();
-            //TODO Check why initialize still happens if noInternetAction performed.
+            //TODO Make sure the application will not continue to run if the current condition applies.
     }
 
         initialize();
