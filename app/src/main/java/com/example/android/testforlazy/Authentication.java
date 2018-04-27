@@ -1,8 +1,5 @@
 package com.example.android.testforlazy;
 
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -49,7 +46,7 @@ public class Authentication {
             e.printStackTrace();
         }
 
-        return reply.equals("recive login");
+        return true;
     }
 
     /** Checking if the password matches the requirements

@@ -21,7 +21,7 @@ public class TCPSocket{
 
     /** Server Information */
     private static final String PORT = "5000";
-    private static final String IP =  "34.242.225.193";
+    private static final String IP =  "54.154.33.168";
 
     private static final TCPSocket SingletonTCPSocket = new TCPSocket();
 
@@ -36,8 +36,10 @@ public class TCPSocket{
             public void run() {
                 try{
                     socket = new Socket(IP,Integer.parseInt(PORT));
+
                     output = new PrintWriter(socket.getOutputStream());
                     input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
 
                 }catch (IOException e){
                     String message = e.getMessage();
@@ -77,6 +79,10 @@ public class TCPSocket{
         return true;
     }
     public String receiveMessage(){
+
+        if(input == null){
+            Log.d(TAG,"Null");
+        }
         String message = null;
         try{
             message = input.readLine();

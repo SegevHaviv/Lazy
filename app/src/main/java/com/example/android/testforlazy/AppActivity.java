@@ -4,26 +4,26 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.widget.Button;
-import android.widget.EditText;
 import android.util.Log;
 import android.view.View;
-import android.text.InputType;
+import android.widget.ImageButton;
 
-import java.util.Scanner;
 
-public class AppActivity extends AppCompatActivity {
+public class AppActivity extends AppCompatActivity{
 
-    /** Temporary variables only for debugging.
-     * Currently working with an input text instead of reading the socket's input until the server will be ready. **/
-    private Button btn;
-    private EditText ed;
+    private ImageButton backward;
+    private ImageButton playAndPause;
+    private ImageButton forward;
+
+    private MediaPlayer mp;
+
+    boolean play = true;
+
+    private boolean isInFront;
+
+    int[] tracks = new int[3];
+    int currentTrack = 0;
 
 
     private static final String TAG = AppActivity.class.getSimpleName();
@@ -36,54 +36,118 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
 
-        btn = findViewById(R.id.app_btn);
-        ed = findViewById(R.id.input_ed_app);
+        backward = findViewById(R.id.backward);
+        playAndPause = findViewById(R.id.playAndPause);
+        forward = findViewById(R.id.forward);
 
-        tcpSocket = TCPSocket.getInstance();
+        mp = MediaPlayer.create(this,R.raw.file);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        playAndPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cmd = ed.getText().toString();
-                execute(cmd);
+                if(play){
+                    play = false;
+                    playAndPause.setImageDrawable(getResources().getDrawable(R.drawable.pause));
+                    mp.start();
+                }else{
+                    play = true;
+                    playAndPause.setImageDrawable(getResources().getDrawable(R.drawable.play));
+                    mp.pause();
+                }
             }
         });
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Implement forward button
+            }
+        });
+
+        backward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Implement backward button
+            }
+        });
+
+
+
+//
+//        tcpSocket = TCPSocket.getInstance();
+//        execute();
+
+
     }
 
     /**
-     * Executes the given cmd
-     * @param cmd specific cmd to execute
+     * Executes the commands given.
      */
-    public void execute(String cmd) {
-            cmd = cmd.toLowerCase();
+    public void execute() {
 
-            Log.d(TAG, cmd);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
 
-            switch (cmd) {
-                case "camera":
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    startActivity(intent);
-                    break;
+                    Log.d(TAG, "Waiting for a message");
+                    cmd = tcpSocket.receiveMessage();
+
+                    cmd = cmd.toLowerCase();
+
+                    Log.d(TAG, "Received command : " + cmd);
+
+                    switch (cmd) {
+                        case "camera":
+                            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                            startActivity(intent);
+                            break;
+                        case "mediaplayer":
+
+                        case "stop":
+                            onBackPressed();
+                    }
+                }
             }
-        }
 
+
+        });
+
+        t.start();
+    }
 
 
     @Override
-    public void onBackPressed() {
-        new android.app.AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Exit?")
-                .setMessage("You sure you'd like to exit?")
-                .setPositiveButton("CLOSE", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finishAffinity();
-                        System.exit(0);
-                    }
+    protected void onPause() {
+        super.onPause();
+        isInFront = false;
+    }
 
-                }).setNegativeButton("STAY",null)
-                .show();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isInFront = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if(isInFront) {
+            new android.app.AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Exit?")
+                    .setMessage("You sure you'd like to exit?")
+                    .setPositiveButton("CLOSE", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finishAffinity();
+                            System.exit(0);
+                        }
+
+                    }).setNegativeButton("STAY", null)
+                    .show();
+        }else{
+            super.onBackPressed();
+        }
     }
 }
