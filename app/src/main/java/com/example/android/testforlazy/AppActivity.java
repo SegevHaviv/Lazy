@@ -80,9 +80,9 @@ public class AppActivity extends AppCompatActivity{
 
 
 
-//
-//        tcpSocket = TCPSocket.getInstance();
-//        execute();
+
+        tcpSocket = TCPSocket.getInstance();
+        execute();
 
 
     }
@@ -140,18 +140,28 @@ public class AppActivity extends AppCompatActivity{
                     switch (cmd) {
                         case "play":
                             playAndPause();
+                            break;
                         case "next":
                             forwardSong(findViewById(R.id.forward));
+                            break;
                         case "back":
                             backSong(findViewById(R.id.backward));
+                            break;
                         case "volumedown":
                             if(volume >= 5)
                                 volume -= 5;
                             mp.setVolume(volume,volume);
+                            break;
                         case "volumeup":
                             if(volume <= 95)
                                 volume +=5;
                             mp.setVolume(volume,volume);
+                            break;
+                        case "mute":
+                            mp.setVolume(0,0);
+                            break;
+                        default:
+                            Log.d(TAG,"Unknown command.");
                     }
                 }
             }

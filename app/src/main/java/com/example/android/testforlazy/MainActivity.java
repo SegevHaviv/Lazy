@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity{
                         user.setPassword(inputPassword);
                     }
 
+
                     //Returns true if the login succeed, false otherwise.
                     Boolean result = authentication.login(user.getEmail(),user.getPassword());
                     Log.i(TAG,result.toString());

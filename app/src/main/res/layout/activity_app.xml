@@ -7,10 +7,11 @@
     tools:context="com.example.android.testforlazy.AppActivity">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:orientation="horizontal"
+        
         android:weightSum="3">
 
         <ImageButton
@@ -18,28 +19,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
 
-            android:src="@drawable/rewind"
+            android:layout_weight="1"
             android:background="@android:color/white"
 
-            android:layout_weight="1"
-/>
+            android:src="@drawable/rewind" />
 
         <ImageButton
             android:id="@+id/playAndPause"
-            android:src="@drawable/play"
-            android:background="@android:color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
- />
+            android:background="@android:color/white"
+            android:src="@drawable/play" />
 
         <ImageButton
             android:id="@+id/forward"
-            android:src="@drawable/foward"
-            android:background="@android:color/white"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
- />
+            android:background="@android:color/white"
+            android:src="@drawable/foward"
+            />
+
     </LinearLayout>
+
 </LinearLayout>

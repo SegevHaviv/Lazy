@@ -21,7 +21,7 @@ public class TCPSocket{
 
     /** Server Information */
     private static final String PORT = "5000";
-    private static final String IP =  "54.154.33.168";
+    private static final String IP =  "193.106.55.107";
 
     private static final TCPSocket SingletonTCPSocket = new TCPSocket();
 
